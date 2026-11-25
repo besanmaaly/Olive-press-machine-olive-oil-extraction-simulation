@@ -1,0 +1,24 @@
+CC       = gcc
+CFLAGS   = -std=gnu11 -Wall -Wextra -g -fopenmp -Iinclude -Isrc
+SHARED   = src/ipc_util.c src/stage_support.c
+P1       = src/main.c src/supervisor.c src/logger.c
+REAL_APP = src/config.c src/reception.c src/cleaning.c src/washing.c \
+           src/crushing.c src/malaxation.c src/pressing.c \
+           src/quality_control.c src/gui.c
+
+.PHONY: all clean test
+all: olive_press
+
+# Final build: requires source files from Partners 2, 3 and 4.
+olive_press: $(SHARED) $(P1) $(REAL_APP)
+	$(CC) $(CFLAGS) -o $@ $^ -lm -lglut -lGLU -lGL
+
+# Fully functional standalone supervisor test using the supplied mocks.
+sup_mock: $(SHARED) $(P1) tests/config_stub.c tests/mock_stages.c
+	$(CC) $(CFLAGS) -o $@ $^ -lm
+
+test: sup_mock
+	bash tests/test_supervisor.sh
+
+clean:
+	rm -f olive_press sup_mock *.log

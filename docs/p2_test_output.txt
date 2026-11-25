@@ -1,0 +1,38 @@
+== build (zero warnings required)
+  [OK]   all P2 sources and tests compile without warnings
+== 1. config parser
+  [OK]   default.cfg equals built-in defaults (exit 0)
+  [OK]   fast.cfg loads (exit 0)
+  [OK]   no_faults.cfg loads (exit 0)
+  [OK]   stress.cfg loads (exit 0)
+  [OK]   bad_unknown.cfg -> warning only (exit 0)
+  [OK]   bad_syntax.cfg -> error (exit 1)
+  [OK]   bad_range.cfg -> error (exit 1)
+  [OK]   bad_number.cfg -> error (exit 1)
+  [OK]   bad_value.cfg -> error (exit 1)
+  [OK]   bad_missing.cfg -> error (exit 1)
+  [OK]   missing file -> error (exit 1)
+  [OK]   error message has file:line
+  [OK]   unknown key warning text
+  [OK]   single number gives min = max
+== 2. reception (harness, dummy cleaning)
+  [OK]   3 batches: RUN x3, STOP x2, no STOP after last
+  [OK]   output pipe closed at the end (EOF seen)
+== 3. cleaning <-> belt (timing test, 21 checks)
+== cleaning_belt_test: 21 passed, 0 failed
+  [OK]   cleaning_belt_test
+== 4. washing (harness)
+  [OK]   washing forwards all lots
+== 5. OpenMP on/off + physics
+online CPUs: 1
+  TIME  OpenMP off: 0.378 s | on, 2 threads: 0.371 s (x1.02) | on, 4 threads: 0.283 s (x1.34)
+  TIME  OpenMP off: 0.266 s | on, 2 threads: 0.234 s (x1.14) | on, 4 threads: 0.273 s (x0.98)
+== omp_compare_test: 14 passed, 0 failed
+  [OK]   omp_compare_test
+== 6. pipeline reception -> cleaning -> washing
+  [OK]   pipeline 'config/fast.cfg' x40
+  [OK]   pipeline 'config/default.cfg 100 1 0' x40
+  [OK]   pipeline 'config/default.cfg 100 1 1' x40
+  [OK]   pipeline 'config/default.cfg 1000 1 1' x40
+  [OK]   pipeline 'config/default.cfg 5 200 0 300' x40
+== summary: 25 ok, 0 failed
